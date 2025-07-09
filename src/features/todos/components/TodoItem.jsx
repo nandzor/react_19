@@ -29,38 +29,13 @@ export function TodoItem({ todo, onRemoveOptimistic }) {
   };
 
   // Gaya untuk elemen <li>.
-  const itemStyle = {
-    display: 'flex',
-    justifyContent: 'space-between', // Judul di kiri, tombol di kanan.
-    alignItems: 'center',            // Sejajarkan item secara vertikal.
-    padding: '10px',
-    borderBottom: '1px solid #eee',
-    // Mengatur opacity menjadi 0.5 jika item ini adalah item "optimistic" yang sedang dalam proses.
-    // Ini memberikan umpan balik visual bahwa sesuatu sedang terjadi.
-    opacity: todo.pending ? 0.5 : 1,
-  };
-
-  // Gaya untuk judul To-Do.
-  const titleStyle = {
-    // Memberi coretan pada teks jika To-Do sudah selesai (`completed: true`).
-    textDecoration: todo.completed ? 'line-through' : 'none',
-  };
-
   return (
-    // Merender item dalam elemen <li>.
-    <li style={itemStyle}>
-      {/* Menampilkan judul To-Do. */}
-      {/* Jika `todo.pending` true, tampilkan teks "(Menyimpan...)" */}
-      <span style={titleStyle}>{todo.title} {todo.pending && '(Menyimpan...)'}</span>
+    <li className={`list-group-item d-flex justify-content-between align-items-center ${todo.pending ? 'opacity-50' : ''}`}>
+      <span className={todo.completed ? 'text-decoration-line-through' : ''}>{todo.title} {todo.pending && '(Menyimpan...)'}</span>
       
-      {/* Setiap item memiliki form-nya sendiri untuk aksi penghapusan. */}
-      {/* Ini adalah pola umum saat menggunakan Server Actions untuk item dalam daftar. */}
       <form action={handleDelete}>
-        {/* Input tersembunyi (hidden) untuk mengirim ID To-Do ke Server Action. */}
-        {/* `name="id"` harus cocok dengan yang diharapkan oleh `formData.get('id')` di server. */}
         <input type="hidden" name="id" value={todo.id} />
-        {/* Tombol submit untuk menghapus, dengan gaya kustom (warna merah). */}
-        <SubmitButton style={{ backgroundColor: '#dc3545' }}>Hapus</SubmitButton>
+        <SubmitButton className="btn-danger btn-sm">Hapus</SubmitButton>
       </form>
     </li>
   );

@@ -50,15 +50,10 @@ export function AddTodoForm({ onAddOptimistic }) {
   };
 
   return (
-    // Elemen form. `ref` dihubungkan ke `formRef`.
-    // `action` dihubungkan ke `handleFormAction` yang kita buat.
-    <form ref={formRef} action={handleFormAction} style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-      {/* Input field untuk judul To-Do. `name="title"` penting agar `formData.get('title')` berfungsi. */}
-      <Input type="text" name="title" placeholder="Apa yang ingin kamu lakukan?" required />
-      {/* Tombol submit kustom. */}
-      <SubmitButton>Tambah</SubmitButton>
-      {/* Menampilkan pesan status dari Server Action jika ada. */}
-      {state?.message && <p style={{ marginLeft: '8px', alignSelf: 'center', margin: 0 }}>{state.message}</p>}
+    <form ref={formRef} action={handleFormAction} className="d-flex mb-3">
+      <Input type="text" name="title" placeholder="Apa yang ingin kamu lakukan?" required className="me-2" />
+      <SubmitButton className="btn-primary">Tambah</SubmitButton>
+      {state?.message && <p className="ms-2 my-0 align-self-center">{state.message}</p>}
     </form>
   );
 }

@@ -64,18 +64,13 @@ export function TodoList() {
   };
 
   // Menampilkan spinner loading saat data sedang diambil.
-  if (isLoading) return <div style={{ display: 'flex', justifyContent: 'center' }}><Spinner /></div>;
-  // Menampilkan pesan error jika pengambilan data gagal.
-  if (isError) return <div>Error: Gagal memuat data To-Do.</div>;
+  if (isLoading) return <div className="d-flex justify-content-center"><Spinner /></div>;
+  if (isError) return <div className="alert alert-danger">Error: Gagal memuat data To-Do.</div>;
 
   return (
     <div>
-      {/* Form untuk menambahkan To-Do, meneruskan callback untuk optimistic update. */}
       <AddTodoForm onAddOptimistic={handleAddOptimistic} />
-      {/* Daftar To-Do. */}
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {/* Melakukan map pada `optimisticTodos` (bukan `todos`) untuk merender daftar. */}
-        {/* Ini memastikan UI selalu menampilkan state terbaru, termasuk pembaruan sementara. */}
+      <ul className="list-group">
         {optimisticTodos?.map(todo => (
           <TodoItem 
             key={todo.id} 

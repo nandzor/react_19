@@ -9,8 +9,8 @@ import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/Button';
 
 // Komponen tombol submit yang secara otomatis mengetahui kapan form sedang dalam proses pengiriman.
-// Menerima `children` (teks tombol) dan `style` sebagai props.
-export function SubmitButton({ children, style }) {
+// Menerima `children` (teks tombol) dan `className` sebagai props.
+export function SubmitButton({ children, className }) {
   // Memanggil hook `useFormStatus` untuk mendapatkan status form.
   // `pending` adalah boolean yang bernilai `true` jika form sedang di-submit (menunggu respons dari Server Action),
   // dan `false` jika tidak.
@@ -21,8 +21,7 @@ export function SubmitButton({ children, style }) {
     // `type="submit"` adalah atribut standar HTML untuk tombol pengirim form.
     // `disabled={pending}` akan menonaktifkan tombol saat `pending` bernilai true,
     // mencegah pengguna mengklik tombol berkali-kali.
-    // `style` memungkinkan penyesuaian gaya dari luar.
-    <Button type="submit" disabled={pending} style={style}>
+    <Button type="submit" disabled={pending} className={className}>
       {/* Konten tombol berubah secara dinamis. */}
       {/* Jika `pending` true, tampilkan 'Menyimpan...'. */}
       {/* Jika tidak, tampilkan `children` (misalnya, 'Tambah' atau 'Hapus'). */}
