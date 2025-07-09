@@ -1,4 +1,3 @@
-
 'use server';
 
 import { api } from '@/lib/api';
@@ -25,13 +24,13 @@ export async function createTodoAction(previousState, formData) {
 
 // Action untuk menghapus To-Do
 export async function deleteTodoAction(previousState, formData) {
-    const id = Number(formData.get('id'));
+  const id = Number(formData.get('id'));
 
-    try {
-        await api.deleteTodo(id);
-        // revalidatePath('/todos');
-        return { message: 'To-Do berhasil dihapus.' };
-    } catch (e) {
-        return { message: 'Gagal menghapus To-Do.' };
-    }
+  try {
+    await api.deleteTodo(id);
+    // revalidatePath('/todos');
+    return { message: 'To-Do berhasil dihapus.' };
+  } catch (e) {
+    return { message: 'Gagal menghapus To-Do.' };
+  }
 }
