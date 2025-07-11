@@ -1,26 +1,18 @@
 
-import { users } from './data.js';
+import { api } from '../../lib/api';
 
 export const getUsers = async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return users;
+  return api.getUsers();
 };
 
 export const createUser = async (newUser) => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  const user = { id: Date.now(), ...newUser };
-  users.push(user);
-  return user;
+  return api.createUser(newUser);
 };
 
 export const updateUser = async (updatedUser) => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  users = users.map(user => (user.id === updatedUser.id ? updatedUser : user));
-  return updatedUser;
+  return api.updateUser(updatedUser);
 };
 
 export const deleteUser = async (userId) => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  users = users.filter(user => user.id !== userId);
-  return userId;
+  return api.deleteUser(userId);
 };

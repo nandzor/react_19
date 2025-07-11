@@ -3,7 +3,7 @@ import React, { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { updateUser } from '../actions';
 
-const EditUserForm = ({ user, setOptimisticUsers, setIsEditing }) => {
+const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
   const [state, formAction] = useActionState(async (previousState, formData) => {
     const updatedUser = {
       id: user.id,
@@ -12,7 +12,7 @@ const EditUserForm = ({ user, setOptimisticUsers, setIsEditing }) => {
     };
     setOptimisticUsers({ type: 'update', user: updatedUser });
     const result = await updateUser(updatedUser);
-    setIsEditing(false);
+    clearEditing();
     return result;
   }, null);
 
