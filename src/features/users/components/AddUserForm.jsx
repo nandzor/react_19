@@ -3,7 +3,7 @@ import React, { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { createUser } from '../actions';
 
-const AddUserForm = ({ setOptimisticUsers }) => {
+const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
   const [state, formAction] = useActionState(async (previousState, formData) => {
     const newUser = {
       name: formData.get('name'),
@@ -11,6 +11,7 @@ const AddUserForm = ({ setOptimisticUsers }) => {
     };
     setOptimisticUsers({ type: 'add', user: newUser });
     const result = await createUser(newUser);
+    if (onSuccess) onSuccess();
     return result;
   }, null);
 
