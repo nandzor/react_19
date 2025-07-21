@@ -14,6 +14,12 @@ const UserTable = ({ users, setOptimisticUsers }) => {
   const [editingUser, setEditingUser] = React.useState(null);
   const [globalFilter, setGlobalFilter] = React.useState('');
 
+  // Sort users by id descending (latest first)
+  const sortedUsers = React.useMemo(() => {
+    if (!users) return [];
+    return [...users].sort((a, b) => (b.id ?? 0) - (a.id ?? 0));
+  }, [users]);
+
   const columns = React.useMemo(
     () => [
       {
@@ -70,7 +76,7 @@ const UserTable = ({ users, setOptimisticUsers }) => {
   );
 
   const table = useReactTable({
-    data: users,
+    data: sortedUsers,
     columns,
     state: {
       globalFilter,
@@ -84,15 +90,15 @@ const UserTable = ({ users, setOptimisticUsers }) => {
 
   return (
     <div className="table-responsive">
-      <div className="mb-2 d-flex justify-content-between align-items-center">
-        <input
+      <div className="mb-2 d-flex justify-content-end align-items-center">
+        {/* <input
           type="text"
           className="form-control w-auto"
           value={globalFilter ?? ''}
           onChange={e => setGlobalFilter(e.target.value)}
           placeholder="Search users..."
           style={{ minWidth: 200 }}
-        />
+        /> */}
         <div>
           <button
             className="btn btn-outline-secondary btn-sm me-1"

@@ -34,6 +34,9 @@ const UsersPage = () => {
     });
   };
 
+
+  const [showModal, setShowModal] = React.useState(false);
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -41,8 +44,6 @@ const UsersPage = () => {
   if (error) {
     return <p>Error loading users: {error.message}</p>;
   }
-
-  const [showModal, setShowModal] = React.useState(false);
 
   return (
     <div className="container p-4 mx-auto">
@@ -55,20 +56,20 @@ const UsersPage = () => {
       </button>
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 min-w-[320px] relative">
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              onClick={() => setShowModal(false)}
-              aria-label="Close"
-            >
-              &times;
-            </button>
-            <h2 className="text-lg font-semibold mb-4">Add User</h2>
-            <AddUserForm
-              setOptimisticUsers={handleOptimisticUsers}
-              onSuccess={() => setShowModal(false)}
-            />
+        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1" role="dialog">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add User</h5>
+                <button type="button" className="btn-close" aria-label="Close" onClick={() => setShowModal(false)}></button>
+              </div>
+              <div className="modal-body">
+                <AddUserForm
+                  setOptimisticUsers={handleOptimisticUsers}
+                  onSuccess={() => setShowModal(false)}
+                />
+              </div>
+            </div>
           </div>
         </div>
       )}

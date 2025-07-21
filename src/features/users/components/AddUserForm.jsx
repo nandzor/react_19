@@ -16,19 +16,29 @@ const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
   }, null);
 
   return (
-    <form action={formAction} className="space-y-4">
-      <input
-        type="text"
-        name="name"
-        placeholder="Name"
-        className="w-full p-2 border rounded-lg"
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        className="w-full p-2 border rounded-lg"
-      />
+    <form action={formAction}>
+      <div className="mb-3">
+        <label htmlFor="name" className="form-label">Name</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Name"
+          className="form-control"
+          required
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="email" className="form-label">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          className="form-control"
+          required
+        />
+      </div>
       <SubmitButton />
     </form>
   );
@@ -37,7 +47,7 @@ const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
 const SubmitButton = () => {
   const { pending } = useFormStatus();
   return (
-    <button type="submit" disabled={pending} className="w-full p-2 text-white bg-blue-500 rounded-lg">
+    <button type="submit" disabled={pending} className="btn btn-primary w-100">
       {pending ? 'Adding...' : 'Add User'}
     </button>
   );
