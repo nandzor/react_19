@@ -89,59 +89,13 @@ const UserTable = ({ users, setOptimisticUsers }) => {
   });
 
   return (
-    <div className="table-responsive">
-      <div className="mb-2 d-flex justify-content-end align-items-center">
-        {/* <input
-          type="text"
-          className="form-control w-auto"
-          value={globalFilter ?? ''}
-          onChange={e => setGlobalFilter(e.target.value)}
-          placeholder="Search users..."
-          style={{ minWidth: 200 }}
-        /> */}
-        <div>
-          <button
-            className="btn btn-outline-secondary btn-sm me-1"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {'<<'}
-          </button>
-          <button
-            className="btn btn-outline-secondary btn-sm me-1"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {'<'}
-          </button>
-          <span>
-            Page{' '}
-            <strong>
-              {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-            </strong>
-          </span>
-          <button
-            className="btn btn-outline-secondary btn-sm ms-1"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            {'>'}
-          </button>
-          <button
-            className="btn btn-outline-secondary btn-sm ms-1"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            {'>>'}
-          </button>
-        </div>
-      </div>
-      <table className="table table-striped table-hover">
-        <thead>
+    <div className="table-responsive px-3 pt-3 pb-2">
+      <table className="table table-striped table-hover mb-0">
+        <thead className="table-light">
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map(header => (
-                <th key={header.id}>
+                <th key={header.id} className="align-middle">
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -168,7 +122,7 @@ const UserTable = ({ users, setOptimisticUsers }) => {
           {table.getRowModel().rows.map(row => (
             <tr key={row.id}>
               {row.getVisibleCells().map(cell => (
-                <td key={cell.id}>
+                <td key={cell.id} className="align-middle">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
@@ -176,21 +130,56 @@ const UserTable = ({ users, setOptimisticUsers }) => {
           ))}
         </tbody>
       </table>
-      <div className="d-flex justify-content-between align-items-center mt-2">
-        <span>
-          Showing {table.getRowModel().rows.length} of {users.length} users
-        </span>
-        <select
-          className="form-select form-select-sm w-auto"
-          value={table.getState().pagination.pageSize}
-          onChange={e => table.setPageSize(Number(e.target.value))}
-        >
-          {[5, 10, 20, 50].map(pageSize => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
+      <div className="d-flex justify-content-between align-items-center mt-3">
+        <div>
+          <button
+            className="btn btn-outline-primary btn-sm me-1"
+            onClick={() => table.setPageIndex(0)}
+            disabled={!table.getCanPreviousPage()}
+          >
+            {'<<'}
+          </button>
+          <button
+            className="btn btn-outline-primary btn-sm me-1"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            {'<'}
+          </button>
+          <span className="mx-2">
+            Page <strong>{table.getState().pagination.pageIndex + 1} of {table.getPageCount()}</strong>
+          </span>
+          <button
+            className="btn btn-outline-primary btn-sm ms-1"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            {'>'}
+          </button>
+          <button
+            className="btn btn-outline-primary btn-sm ms-1"
+            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+            disabled={!table.getCanNextPage()}
+          >
+            {'>>'}
+          </button>
+        </div>
+        <div>
+          <span className="me-3">
+            Showing {table.getRowModel().rows.length} of {users.length} users
+          </span>
+          <select
+            className="form-select form-select-sm w-auto d-inline-block"
+            value={table.getState().pagination.pageSize}
+            onChange={e => table.setPageSize(Number(e.target.value))}
+          >
+            {[5, 10, 20, 50].map(pageSize => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       {editingUser && (
         <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1" role="dialog">

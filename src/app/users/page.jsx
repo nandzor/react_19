@@ -47,13 +47,20 @@ const UsersPage = () => {
 
   return (
     <div className="container p-4 mx-auto">
-      <h1 className="mb-4 text-2xl font-bold">Users</h1>
-      <button
-        className="btn btn-primary mb-3"
-        onClick={() => setShowModal(true)}
-      >
-        Add User
-      </button>
+      <div className="card shadow-sm mb-4">
+        <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h5 className="mb-0">Users</h5>
+          <button
+            className="btn btn-light btn-sm"
+            onClick={() => setShowModal(true)}
+          >
+            <i className="bi bi-plus-lg me-1"></i> Add User
+          </button>
+        </div>
+        <div className="card-body p-0">
+          <UserTable users={optimisticUsers || []} setOptimisticUsers={handleOptimisticUsers} />
+        </div>
+      </div>
 
       {showModal && (
         <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1" role="dialog">
@@ -73,8 +80,6 @@ const UsersPage = () => {
           </div>
         </div>
       )}
-
-      <UserTable users={optimisticUsers || []} setOptimisticUsers={handleOptimisticUsers} />
     </div>
   );
 };
