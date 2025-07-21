@@ -1,12 +1,7 @@
 
-import { Outlet, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Outlet, NavLink, Link } from "react-router-dom";
 
 const AdminLayout = () => {
-  const location = useLocation();
-  const isDashboard = location.pathname === '/' || location.pathname === '/dashboard';
-  const isUsers = location.pathname.startsWith('/users') || location.pathname.startsWith('/users');
-
   return (
     <div className="d-flex flex-column flex-md-row min-vh-100">
       <nav
@@ -22,14 +17,21 @@ const AdminLayout = () => {
         <hr />
         <ul className="nav nav-pills flex-column mb-auto">
           <li className="nav-item">
-            <Link to="/dashboard" className={`nav-link ${isDashboard ? 'active' : 'text-white'}`} aria-current={isDashboard ? 'page' : undefined}>
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) => `nav-link${isActive ? ' active' : ' text-white'}`}
+              end
+            >
               Dashboard
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <Link to="/users" className={`nav-link ${isUsers ? 'active' : 'text-white'}`} aria-current={isUsers ? 'page' : undefined}>
+            <NavLink
+              to="/users"
+              className={({ isActive }) => `nav-link${isActive ? ' active' : ' text-white'}`}
+            >
               Users
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>
