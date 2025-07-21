@@ -3,10 +3,10 @@ import { Outlet } from "react-router-dom";
 
 const AdminLayout = () => {
   return (
-    <div className="d-flex" style={{ height: "100vh" }}>
-      <div
-        className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
-        style={{ width: "280px" }}
+    <div className="d-flex flex-column flex-md-row min-vh-100">
+      <nav
+        className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark min-vh-100 w-100 w-md-280"
+        style={{ maxWidth: "280px" }}
       >
         <a
           href="/"
@@ -21,8 +21,13 @@ const AdminLayout = () => {
               Dashboard
             </a>
           </li>
+          <li className="nav-item">
+            <a href="/app/users" className="nav-link text-white">
+              Users
+            </a>
+          </li>
         </ul>
-      </div>
+      </nav>
       <main className="flex-grow-1 p-4 bg-light">
         <Outlet />
       </main>
