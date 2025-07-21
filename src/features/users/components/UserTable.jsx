@@ -193,11 +193,23 @@ const UserTable = ({ users, setOptimisticUsers }) => {
         </select>
       </div>
       {editingUser && (
-        <EditUserForm
-          user={editingUser}
-          setOptimisticUsers={setOptimisticUsers}
-          clearEditing={() => setEditingUser(null)}
-        />
+        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1" role="dialog">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Edit User</h5>
+                <button type="button" className="btn-close" aria-label="Close" onClick={() => setEditingUser(null)}></button>
+              </div>
+              <div className="modal-body">
+                <EditUserForm
+                  user={editingUser}
+                  setOptimisticUsers={setOptimisticUsers}
+                  clearEditing={() => setEditingUser(null)}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

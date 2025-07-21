@@ -17,19 +17,29 @@ const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
   }, null);
 
   return (
-    <form action={formAction} className="space-y-4">
-      <input
-        type="text"
-        name="name"
-        defaultValue={user.name}
-        className="w-full p-2 border rounded-lg"
-      />
-      <input
-        type="email"
-        name="email"
-        defaultValue={user.email}
-        className="w-full p-2 border rounded-lg"
-      />
+    <form action={formAction}>
+      <div className="mb-3">
+        <label htmlFor="edit-name" className="form-label">Name</label>
+        <input
+          type="text"
+          name="name"
+          id="edit-name"
+          defaultValue={user.name}
+          className="form-control"
+          required
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="edit-email" className="form-label">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="edit-email"
+          defaultValue={user.email}
+          className="form-control"
+          required
+        />
+      </div>
       <SubmitButton />
     </form>
   );
@@ -38,7 +48,7 @@ const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
 const SubmitButton = () => {
   const { pending } = useFormStatus();
   return (
-    <button type="submit" disabled={pending} className="w-full p-2 text-white bg-blue-500 rounded-lg">
+    <button type="submit" disabled={pending} className="btn btn-primary w-100">
       {pending ? 'Updating...' : 'Update User'}
     </button>
   );
