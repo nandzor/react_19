@@ -1,3 +1,4 @@
+import { api } from '@/lib/api';
 export let users = [
     {
         id: 1,

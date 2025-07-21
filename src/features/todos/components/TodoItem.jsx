@@ -4,9 +4,9 @@
 // Mengimpor hook `useActionState` untuk mengelola state dari form action penghapusan.
 import { useActionState } from 'react';
 // Mengimpor Server Action `deleteTodoAction`.
-import { deleteTodoAction } from '../actions';
+import { deleteTodoAction } from '@/features/todos/actions';
 // Mengimpor komponen tombol submit.
-import { SubmitButton } from './SubmitButton';
+import { SubmitButton } from '@/features/todos/components/SubmitButton';
 
 // State awal untuk action penghapusan.
 const initialState = { message: null };

@@ -1,7 +1,7 @@
 
 import React, { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { createUser } from '../actions';
+import { createUser } from '@/features/users/actions';
 
 const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
   const [state, formAction] = useActionState(async (previousState, formData) => {

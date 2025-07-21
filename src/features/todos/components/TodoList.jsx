@@ -8,7 +8,7 @@ import { getTodos } from '../data';
 // Mengimpor hook `useOptimistic` dari React untuk pembaruan UI yang instan.
 import { useOptimistic } from 'react';
 // Mengimpor komponen-komponen anak.
-import { TodoItem } from './TodoItem';
+import { TodoItem } from '@/features/todos/components/TodoItem';
 import { AddTodoForm } from './AddTodoForm';
 import { Spinner } from '@/components/ui/Spinner';
 

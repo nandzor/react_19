@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getUsers } from '../../features/users/actions';
-import UserTable from '../../features/users/components/UserTable';
-import AddUserForm from '../../features/users/components/AddUserForm';
+import { getUsers } from '@/features/users/actions';
+import UserTable from '@/features/users/components/UserTable';
+import AddUserForm from '@/features/users/components/AddUserForm';
 
 const UsersPage = () => {
   const { data: users, isLoading, error } = useQuery({

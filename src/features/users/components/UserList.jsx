@@ -1,6 +1,6 @@
 
 import React from 'react';
-import UserItem from './UserItem';
+import UserItem from '@/features/users/components/UserItem';
 
 const UserList = ({ users, setOptimisticUsers }) => {
   return (

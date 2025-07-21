@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { deleteUser } from '../actions';
-import EditUserForm from './EditUserForm';
+import { deleteUser } from '@/features/users/actions';
+import EditUserForm from '@/features/users/components/EditUserForm';
 
 const UserItem = ({ user, setOptimisticUsers }) => {
   const [isEditing, setIsEditing] = useState(false);

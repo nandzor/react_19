@@ -1,7 +1,7 @@
 
 import React, { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { updateUser } from '../actions';
+import { updateUser } from '@/features/users/actions';
 
 const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
   const [state, formAction] = useActionState(async (previousState, formData) => {

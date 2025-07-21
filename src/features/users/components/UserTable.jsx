@@ -6,8 +6,8 @@ import {
   getPaginationRowModel,
   flexRender,
 } from '@tanstack/react-table';
-import EditUserForm from './EditUserForm';
-import { deleteUser } from '../actions';
+import EditUserForm from '@/features/users/components/EditUserForm';
+import { deleteUser } from '@/features/users/actions';
 
 
 const UserTable = ({ users, setOptimisticUsers }) => {

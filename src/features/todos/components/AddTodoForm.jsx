@@ -4,7 +4,7 @@
 // Mengimpor hook `useActionState` dari React, yang digunakan untuk mengelola state dari form actions.
 import { useActionState } from 'react';
 // Mengimpor Server Action `createTodoAction` yang akan dipanggil saat form di-submit.
-import { createTodoAction } from '../actions';
+import { createTodoAction } from '@/features/todos/actions';
 // Mengimpor komponen tombol submit khusus yang sadar akan status form.
 import { SubmitButton } from './SubmitButton';
 // Mengimpor komponen Input UI.

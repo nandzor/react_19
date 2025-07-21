@@ -4,6 +4,8 @@
 'use client';
 
 // Mengimpor komponen Header dari direktori komponen layout.
+// Mengimpor komponen TodoList dari direktori fitur todos.
+// Mengimpor komponen Header dari direktori komponen layout.
 import { Header } from '@/components/layout/Header';
 // Mengimpor komponen TodoList dari direktori fitur todos.
 import { TodoList } from '@/features/todos/components/TodoList';
