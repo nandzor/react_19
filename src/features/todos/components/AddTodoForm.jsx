@@ -50,10 +50,10 @@ export function AddTodoForm({ onAddOptimistic }) {
   };
 
   return (
-    <form ref={formRef} action={handleFormAction} className="d-flex mb-3">
-      <Input type="text" name="title" placeholder="Apa yang ingin kamu lakukan?" required className="me-2" />
+    <form ref={formRef} action={handleFormAction} className="flex mb-3">
+      <Input type="text" name="title" placeholder="Apa yang ingin kamu lakukan?" required className="mr-2" />
       <SubmitButton className="btn-primary">Tambah</SubmitButton>
-      {state?.message && <p className="ms-2 my-0 align-self-center">{state.message}</p>}
+      {state?.message && <p className="ml-2 my-0 self-center">{state.message}</p>}
     </form>
   );
 }
