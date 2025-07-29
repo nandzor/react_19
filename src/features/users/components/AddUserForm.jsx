@@ -1,11 +1,14 @@
 
 import React, { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { createUser } from '@/features/users/actions';
 
 const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
+  const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
     name: '',
-    email: ''
+    email: '',
+    phone: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -23,7 +26,7 @@ const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
     
     try {
       setOptimisticUsers({ type: 'add', user: formData });
-      await createUser(formData);
+      await createUser(formData, queryClient);
       if (onSuccess) onSuccess();
     } catch (error) {
       console.error('Error creating user:', error);
@@ -64,6 +67,19 @@ const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
           value={formData.email}
           onChange={handleChange}
           required
+          disabled={isSubmitting}
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="phone" className="form-label">Phone</label>
+        <input
+          type="tel"
+          name="phone"
+          id="phone"
+          placeholder="Phone"
+          className="form-control"
+          value={formData.phone}
+          onChange={handleChange}
           disabled={isSubmitting}
         />
       </div>

@@ -84,30 +84,50 @@ export const api = {
   createUser: async (user) => {
     try {
       const response = await apiClient.post('/users', user);
+      console.log('Create response:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error creating user:', error);
-      throw error;
+      if (error.response?.status >= 400) {
+        throw new Error(`Creation failed: ${error.response.status} - ${error.response.statusText}`);
+      } else {
+        throw error;
+      }
     }
   },
 
   updateUser: async (user) => {
     try {
       const response = await apiClient.put(`/users/${user.id}`, user);
+      console.log('Update response:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error updating user:', error);
-      throw error;
+      // Provide more specific error messages
+      if (error.response?.status === 404) {
+        throw new Error('User not found');
+      } else if (error.response?.status >= 400) {
+        throw new Error(`Update failed: ${error.response.status} - ${error.response.statusText}`);
+      } else {
+        throw error;
+      }
     }
   },
 
   deleteUser: async (id) => {
     try {
       await apiClient.delete(`/users/${id}`);
+      console.log('Delete successful for user:', id);
       return id;
     } catch (error) {
       console.error('Error deleting user:', error);
-      throw error;
+      if (error.response?.status === 404) {
+        throw new Error('User not found');
+      } else if (error.response?.status >= 400) {
+        throw new Error(`Deletion failed: ${error.response.status} - ${error.response.statusText}`);
+      } else {
+        throw error;
+      }
     }
   },
 };

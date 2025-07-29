@@ -1,11 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { updateUser } from '@/features/users/actions';
 
 const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
+  const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
     name: '',
-    email: ''
+    email: '',
+    phone: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -13,7 +16,8 @@ const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
     if (user) {
       setFormData({
         name: user.name || '',
-        email: user.email || ''
+        email: user.email || '',
+        phone: user.phone || ''
       });
     }
   }, [user]);
@@ -35,8 +39,10 @@ const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
         id: user.id,
         ...formData
       };
+      console.log('Submitting update for user:', updatedUser);
       setOptimisticUsers({ type: 'update', user: updatedUser });
-      await updateUser(updatedUser);
+      const result = await updateUser(updatedUser, queryClient);
+      console.log('Update result:', result);
       clearEditing();
     } catch (error) {
       console.error('Error updating user:', error);
@@ -75,6 +81,18 @@ const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
           onChange={handleChange}
           className="form-control"
           required
+          disabled={isSubmitting}
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="edit-phone" className="form-label">Phone</label>
+        <input
+          type="tel"
+          name="phone"
+          id="edit-phone"
+          value={formData.phone}
+          onChange={handleChange}
+          className="form-control"
           disabled={isSubmitting}
         />
       </div>
