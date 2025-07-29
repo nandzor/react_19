@@ -14,7 +14,7 @@ import { TodoList } from '@/features/todos/components/TodoList';
 // Ini adalah objek JavaScript yang akan digunakan sebagai inline style.
 export default function TodoPage() {
   return (
-    <main className="container mt-4">
+    <main className="container mx-auto mt-4 px-4">
       <Header />
       <TodoList />
     </main>

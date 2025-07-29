@@ -40,7 +40,7 @@ const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label htmlFor="name" className="form-label">Name</label>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
         <input
           type="text"
           name="name"
@@ -54,7 +54,7 @@ const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
         />
       </div>
       <div className="mb-3">
-        <label htmlFor="email" className="form-label">Email</label>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
         <input
           type="email"
           name="email"
@@ -67,7 +67,7 @@ const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
           disabled={isSubmitting}
         />
       </div>
-      <div className="d-flex gap-2">
+      <div className="flex gap-2">
         <button type="submit" disabled={isSubmitting} className="btn btn-primary flex-grow-1">
           {isSubmitting ? 'Adding...' : 'Add User'}
         </button>

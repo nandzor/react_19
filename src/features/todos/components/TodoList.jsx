@@ -64,7 +64,7 @@ export function TodoList() {
   };
 
   // Menampilkan spinner loading saat data sedang diambil.
-  if (isLoading) return <div className="d-flex justify-content-center"><Spinner /></div>;
+  if (isLoading) return <div className="flex justify-center"><Spinner /></div>;
   if (isError) return <div className="alert alert-danger">Error: Gagal memuat data To-Do.</div>;
 
   return (

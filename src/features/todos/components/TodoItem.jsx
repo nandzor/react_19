@@ -30,8 +30,8 @@ export function TodoItem({ todo, onRemoveOptimistic }) {
 
   // Gaya untuk elemen <li>.
   return (
-    <li className={`list-group-item d-flex justify-content-between align-items-center ${todo.pending ? 'opacity-50' : ''}`}>
-      <span className={todo.completed ? 'text-decoration-line-through' : ''}>{todo.title} {todo.pending && '(Menyimpan...)'}</span>
+    <li className={`list-group-item flex justify-between items-center ${todo.pending ? 'opacity-50' : ''}`}>
+      <span className={todo.completed ? 'line-through' : ''}>{todo.title} {todo.pending && '(Menyimpan...)'}</span>
       
       <form action={handleDelete}>
         <input type="hidden" name="id" value={todo.id} />

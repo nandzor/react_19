@@ -57,47 +57,44 @@ const UsersPage = () => {
   }
 
   return (
-    <div className="container p-4 mx-auto">
+    <div className="container mx-auto p-4">
       <div className="card shadow-sm mb-4">
-        <div className="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <div className="bg-primary-600 text-white flex justify-between items-center p-4 rounded-t-lg">
           <h5 className="mb-0">Users</h5>
           <button
             className="btn btn-light btn-sm"
             onClick={() => setShowModal(true)}
           >
-            <i className="bi bi-plus-lg me-1"></i> Add User
+            <i className="bi bi-plus-lg mr-1"></i> Add User
           </button>
         </div>
-        <div className="card-body p-0">
+        <div className="p-0">
           <UserTable users={optimisticUsers || []} setOptimisticUsers={handleOptimisticUsers} />
         </div>
       </div>
 
       {showModal && (
         <div 
-          className="modal fade show" 
-          style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
           tabIndex="-1" 
           role="dialog"
           onClick={handleBackdropClick}
         >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add User</h5>
-                <button 
-                  type="button" 
-                  className="btn-close" 
-                  aria-label="Close" 
-                  onClick={handleCloseModal}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <AddUserForm
-                  setOptimisticUsers={handleOptimisticUsers}
-                  onSuccess={handleCloseModal}
-                />
-              </div>
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4" role="document">
+            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+              <h5 className="text-lg font-medium text-gray-900">Add User</h5>
+              <button 
+                type="button" 
+                className="btn-close" 
+                aria-label="Close" 
+                onClick={handleCloseModal}
+              ></button>
+            </div>
+            <div className="p-4">
+              <AddUserForm
+                setOptimisticUsers={handleOptimisticUsers}
+                onSuccess={handleCloseModal}
+              />
             </div>
           </div>
         </div>

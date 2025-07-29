@@ -109,13 +109,13 @@ const UserTable = ({ users, setOptimisticUsers }) => {
   });
 
   return (
-    <div className="table-responsive px-3 pt-3 pb-2">
-      <table className="table table-striped table-hover mb-0">
-        <thead className="table-light">
+    <div className="overflow-x-auto px-3 pt-3 pb-2">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map(header => (
-                <th key={header.id} className="align-middle">
+                <th key={header.id} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -126,7 +126,7 @@ const UserTable = ({ users, setOptimisticUsers }) => {
                   {header.column.getCanFilter() && header.column.id !== 'actions' ? (
                     <input
                       type="text"
-                      className="form-control form-control-sm mt-1"
+                      className="form-control-sm mt-1"
                       value={header.column.getFilterValue() ?? ''}
                       onChange={e => header.column.setFilterValue(e.target.value)}
                       placeholder={`Filter...`}
@@ -138,11 +138,11 @@ const UserTable = ({ users, setOptimisticUsers }) => {
             </tr>
           ))}
         </thead>
-        <tbody>
+        <tbody className="bg-white divide-y divide-gray-200">
           {table.getRowModel().rows.map(row => (
-            <tr key={row.id}>
+            <tr key={row.id} className="hover:bg-gray-50">
               {row.getVisibleCells().map(cell => (
-                <td key={cell.id} className="align-middle">
+                <td key={cell.id} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
@@ -150,17 +150,17 @@ const UserTable = ({ users, setOptimisticUsers }) => {
           ))}
         </tbody>
       </table>
-      <div className="d-flex justify-content-between align-items-center mt-3">
+      <div className="flex justify-between items-center mt-3">
         <div>
           <button
-            className="btn btn-outline-primary btn-sm me-1"
+            className="btn btn-outline-primary btn-sm mr-1"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
             {'<<'}
           </button>
           <button
-            className="btn btn-outline-primary btn-sm me-1"
+            className="btn btn-outline-primary btn-sm mr-1"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
@@ -170,14 +170,14 @@ const UserTable = ({ users, setOptimisticUsers }) => {
             Page <strong>{table.getState().pagination.pageIndex + 1} of {table.getPageCount()}</strong>
           </span>
           <button
-            className="btn btn-outline-primary btn-sm ms-1"
+            className="btn btn-outline-primary btn-sm ml-1"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
             {'>'}
           </button>
           <button
-            className="btn btn-outline-primary btn-sm ms-1"
+            className="btn btn-outline-primary btn-sm ml-1"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >
@@ -185,11 +185,11 @@ const UserTable = ({ users, setOptimisticUsers }) => {
           </button>
         </div>
         <div>
-          <span className="me-3">
+          <span className="mr-3">
             Showing {table.getRowModel().rows.length} of {users.length} users
           </span>
           <select
-            className="form-select form-select-sm w-auto d-inline-block"
+            className="form-control-sm w-auto inline-block"
             value={table.getState().pagination.pageSize}
             onChange={e => table.setPageSize(Number(e.target.value))}
           >
@@ -203,8 +203,7 @@ const UserTable = ({ users, setOptimisticUsers }) => {
       </div>
       {editingUser && (
         <div 
-          className="modal fade show" 
-          style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
           tabIndex="-1" 
           role="dialog"
           onClick={(e) => {
@@ -213,24 +212,22 @@ const UserTable = ({ users, setOptimisticUsers }) => {
             }
           }}
         >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Edit User</h5>
-                <button 
-                  type="button" 
-                  className="btn-close" 
-                  aria-label="Close" 
-                  onClick={() => setEditingUser(null)}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <EditUserForm
-                  user={editingUser}
-                  setOptimisticUsers={setOptimisticUsers}
-                  clearEditing={() => setEditingUser(null)}
-                />
-              </div>
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4" role="document">
+            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+              <h5 className="text-lg font-medium text-gray-900">Edit User</h5>
+              <button 
+                type="button" 
+                className="btn-close" 
+                aria-label="Close" 
+                onClick={() => setEditingUser(null)}
+              ></button>
+            </div>
+            <div className="p-4">
+              <EditUserForm
+                user={editingUser}
+                setOptimisticUsers={setOptimisticUsers}
+                clearEditing={() => setEditingUser(null)}
+              />
             </div>
           </div>
         </div>

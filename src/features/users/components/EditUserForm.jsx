@@ -53,7 +53,7 @@ const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label htmlFor="edit-name" className="form-label">Name</label>
+        <label htmlFor="edit-name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
         <input
           type="text"
           name="name"
@@ -66,7 +66,7 @@ const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
         />
       </div>
       <div className="mb-3">
-        <label htmlFor="edit-email" className="form-label">Email</label>
+        <label htmlFor="edit-email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
         <input
           type="email"
           name="email"
@@ -78,7 +78,7 @@ const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
           disabled={isSubmitting}
         />
       </div>
-      <div className="d-flex gap-2">
+      <div className="flex gap-2">
         <button type="submit" disabled={isSubmitting} className="btn btn-primary flex-grow-1">
           {isSubmitting ? 'Updating...' : 'Update User'}
         </button>

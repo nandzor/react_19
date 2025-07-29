@@ -3,39 +3,47 @@ import { Outlet, NavLink, Link } from "react-router-dom";
 
 const AdminLayout = () => {
   return (
-    <div className="d-flex flex-column flex-md-row min-vh-100">
+    <div className="flex flex-col md:flex-row min-h-screen">
       <nav
-        className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark min-vh-100 w-100 w-md-280"
+        className="flex flex-col flex-shrink-0 p-3 text-white bg-gray-900 min-h-screen w-full md:w-72"
         style={{ maxWidth: "280px" }}
       >
         <Link
           to="/"
-          className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+          className="flex items-center mb-3 md:mb-0 md:mr-auto text-white no-underline"
         >
-          <span className="fs-4">Admin Panel</span>
+          <span className="text-xl">Admin Panel</span>
         </Link>
-        <hr />
-        <ul className="nav nav-pills flex-column mb-auto">
-          <li className="nav-item">
+        <hr className="border-gray-700" />
+        <ul className="space-y-2 mb-auto">
+          <li>
             <NavLink
               to="/dashboard"
-              className={({ isActive }) => `nav-link${isActive ? ' active' : ' text-white'}`}
+              className={({ isActive }) => `block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActive 
+                  ? 'bg-primary-600 text-white' 
+                  : 'text-gray-300 hover:text-white hover:bg-gray-700'
+              }`}
               end
             >
               Dashboard
             </NavLink>
           </li>
-          <li className="nav-item">
+          <li>
             <NavLink
               to="/users"
-              className={({ isActive }) => `nav-link${isActive ? ' active' : ' text-white'}`}
+              className={({ isActive }) => `block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActive 
+                  ? 'bg-primary-600 text-white' 
+                  : 'text-gray-300 hover:text-white hover:bg-gray-700'
+              }`}
             >
               Users
             </NavLink>
           </li>
         </ul>
       </nav>
-      <main className="flex-grow-1 p-4 bg-light">
+      <main className="flex-grow p-4 bg-gray-50">
         <Outlet />
       </main>
     </div>
