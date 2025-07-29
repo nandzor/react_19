@@ -1,8 +1,10 @@
 
 import React, { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { createUser } from '@/features/users/actions';
 
 const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
+  const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,7 +26,7 @@ const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
     
     try {
       setOptimisticUsers({ type: 'add', user: formData });
-      await createUser(formData);
+      await createUser(formData, queryClient);
       if (onSuccess) onSuccess();
     } catch (error) {
       console.error('Error creating user:', error);

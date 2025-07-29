@@ -1,14 +1,16 @@
 
 import React, { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { deleteUser } from '@/features/users/actions';
 import EditUserForm from '@/features/users/components/EditUserForm';
 
 const UserItem = ({ user, setOptimisticUsers }) => {
+  const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
 
   const handleDelete = async () => {
     setOptimisticUsers({ type: 'delete', id: user.id });
-    await deleteUser(user.id);
+    await deleteUser(user.id, queryClient);
   };
 
   return (

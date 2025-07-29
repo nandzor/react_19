@@ -1,4 +1,5 @@
 import React from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import {
   useReactTable,
   getCoreRowModel,
@@ -11,6 +12,7 @@ import { deleteUser } from '@/features/users/actions';
 
 
 const UserTable = ({ users, setOptimisticUsers }) => {
+  const queryClient = useQueryClient();
   const [editingUser, setEditingUser] = React.useState(null);
   const [globalFilter, setGlobalFilter] = React.useState('');
   const [deletingIds, setDeletingIds] = React.useState(new Set());
@@ -69,7 +71,7 @@ const UserTable = ({ users, setOptimisticUsers }) => {
                   if (setOptimisticUsers) {
                     setOptimisticUsers({ type: 'delete', id: row.original.id });
                   }
-                  await deleteUser(row.original.id);
+                  await deleteUser(row.original.id, queryClient);
                 } catch (error) {
                   console.error('Error deleting user:', error);
                   // Revert optimistic update on error

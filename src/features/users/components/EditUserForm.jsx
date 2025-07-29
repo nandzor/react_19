@@ -1,8 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { updateUser } from '@/features/users/actions';
 
 const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
+  const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -37,8 +39,10 @@ const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
         id: user.id,
         ...formData
       };
+      console.log('Submitting update for user:', updatedUser);
       setOptimisticUsers({ type: 'update', user: updatedUser });
-      await updateUser(updatedUser);
+      const result = await updateUser(updatedUser, queryClient);
+      console.log('Update result:', result);
       clearEditing();
     } catch (error) {
       console.error('Error updating user:', error);
