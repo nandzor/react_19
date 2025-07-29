@@ -1,32 +1,68 @@
 
-import React, { useActionState } from 'react';
-import { useFormStatus } from 'react-dom';
+import React, { useState, useEffect } from 'react';
 import { updateUser } from '@/features/users/actions';
 
 const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
-  const [state, formAction] = useActionState(async (previousState, formData) => {
-    const updatedUser = {
-      id: user.id,
-      name: formData.get('name'),
-      email: formData.get('email'),
-    };
-    setOptimisticUsers({ type: 'update', user: updatedUser });
-    const result = await updateUser(updatedUser);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name || '',
+        email: user.email || ''
+      });
+    }
+  }, [user]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      const updatedUser = {
+        id: user.id,
+        ...formData
+      };
+      setOptimisticUsers({ type: 'update', user: updatedUser });
+      await updateUser(updatedUser);
+      clearEditing();
+    } catch (error) {
+      console.error('Error updating user:', error);
+      alert('Failed to update user. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleCancel = () => {
     clearEditing();
-    return result;
-  }, null);
+  };
 
   return (
-    <form action={formAction}>
+    <form onSubmit={handleSubmit}>
       <div className="mb-3">
         <label htmlFor="edit-name" className="form-label">Name</label>
         <input
           type="text"
           name="name"
           id="edit-name"
-          defaultValue={user.name}
+          value={formData.name}
+          onChange={handleChange}
           className="form-control"
           required
+          disabled={isSubmitting}
         />
       </div>
       <div className="mb-3">
@@ -35,22 +71,27 @@ const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
           type="email"
           name="email"
           id="edit-email"
-          defaultValue={user.email}
+          value={formData.email}
+          onChange={handleChange}
           className="form-control"
           required
+          disabled={isSubmitting}
         />
       </div>
-      <SubmitButton />
+      <div className="d-flex gap-2">
+        <button type="submit" disabled={isSubmitting} className="btn btn-primary flex-grow-1">
+          {isSubmitting ? 'Updating...' : 'Update User'}
+        </button>
+        <button 
+          type="button" 
+          onClick={handleCancel} 
+          disabled={isSubmitting} 
+          className="btn btn-secondary"
+        >
+          Cancel
+        </button>
+      </div>
     </form>
-  );
-};
-
-const SubmitButton = () => {
-  const { pending } = useFormStatus();
-  return (
-    <button type="submit" disabled={pending} className="btn btn-primary w-100">
-      {pending ? 'Updating...' : 'Update User'}
-    </button>
   );
 };
 
