@@ -12,6 +12,7 @@ const UsersPage = () => {
   });
 
   const [optimisticUsers, setOptimisticUsers] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   React.useEffect(() => {
     if (users) {
@@ -28,14 +29,24 @@ const UsersPage = () => {
           return prev.map(u => (u.id === user.id ? user : u));
         case 'delete':
           return prev.filter(u => u.id !== id);
+        case 'revert':
+          // Revert optimistic update by adding back the user
+          return [...prev, user];
         default:
           return prev;
       }
     });
   };
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
-  const [showModal, setShowModal] = React.useState(false);
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      handleCloseModal();
+    }
+  };
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -63,17 +74,28 @@ const UsersPage = () => {
       </div>
 
       {showModal && (
-        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1" role="dialog">
+        <div 
+          className="modal fade show" 
+          style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} 
+          tabIndex="-1" 
+          role="dialog"
+          onClick={handleBackdropClick}
+        >
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Add User</h5>
-                <button type="button" className="btn-close" aria-label="Close" onClick={() => setShowModal(false)}></button>
+                <button 
+                  type="button" 
+                  className="btn-close" 
+                  aria-label="Close" 
+                  onClick={handleCloseModal}
+                ></button>
               </div>
               <div className="modal-body">
                 <AddUserForm
                   setOptimisticUsers={handleOptimisticUsers}
-                  onSuccess={() => setShowModal(false)}
+                  onSuccess={handleCloseModal}
                 />
               </div>
             </div>

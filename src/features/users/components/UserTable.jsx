@@ -13,6 +13,8 @@ import { deleteUser } from '@/features/users/actions';
 const UserTable = ({ users, setOptimisticUsers }) => {
   const [editingUser, setEditingUser] = React.useState(null);
   const [globalFilter, setGlobalFilter] = React.useState('');
+  const [deletingIds, setDeletingIds] = React.useState(new Set());
+  const [editingIds, setEditingIds] = React.useState(new Set());
 
   // Sort users by id descending (latest first)
   const sortedUsers = React.useMemo(() => {
@@ -53,20 +55,38 @@ const UserTable = ({ users, setOptimisticUsers }) => {
           <div className="btn-group" role="group">
             <button
               className="btn btn-primary"
+              disabled={editingIds.has(row.original.id) || deletingIds.has(row.original.id)}
               onClick={() => setEditingUser(row.original)}
             >
-              Edit
+              {editingIds.has(row.original.id) ? 'Editing...' : 'Edit'}
             </button>
             <button
               className="btn btn-danger"
+              disabled={deletingIds.has(row.original.id)}
               onClick={async () => {
-                if (setOptimisticUsers) {
-                  setOptimisticUsers({ type: 'delete', id: row.original.id });
+                try {
+                  setDeletingIds(prev => new Set(prev).add(row.original.id));
+                  if (setOptimisticUsers) {
+                    setOptimisticUsers({ type: 'delete', id: row.original.id });
+                  }
+                  await deleteUser(row.original.id);
+                } catch (error) {
+                  console.error('Error deleting user:', error);
+                  // Revert optimistic update on error
+                  if (setOptimisticUsers) {
+                    setOptimisticUsers({ type: 'revert', user: row.original });
+                  }
+                  alert('Failed to delete user. Please try again.');
+                } finally {
+                  setDeletingIds(prev => {
+                    const newSet = new Set(prev);
+                    newSet.delete(row.original.id);
+                    return newSet;
+                  });
                 }
-                await deleteUser(row.original.id);
               }}
             >
-              Delete
+              {deletingIds.has(row.original.id) ? 'Deleting...' : 'Delete'}
             </button>
           </div>
         ),
@@ -182,12 +202,27 @@ const UserTable = ({ users, setOptimisticUsers }) => {
         </div>
       </div>
       {editingUser && (
-        <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1" role="dialog">
+        <div 
+          className="modal fade show" 
+          style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} 
+          tabIndex="-1" 
+          role="dialog"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setEditingUser(null);
+            }
+          }}
+        >
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Edit User</h5>
-                <button type="button" className="btn-close" aria-label="Close" onClick={() => setEditingUser(null)}></button>
+                <button 
+                  type="button" 
+                  className="btn-close" 
+                  aria-label="Close" 
+                  onClick={() => setEditingUser(null)}
+                ></button>
               </div>
               <div className="modal-body">
                 <EditUserForm
