@@ -5,7 +5,8 @@ import { createUser } from '@/features/users/actions';
 const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
   const [formData, setFormData] = useState({
     name: '',
-    email: ''
+    email: '',
+    phone: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -64,6 +65,19 @@ const AddUserForm = ({ setOptimisticUsers, onSuccess }) => {
           value={formData.email}
           onChange={handleChange}
           required
+          disabled={isSubmitting}
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="phone" className="form-label">Phone</label>
+        <input
+          type="tel"
+          name="phone"
+          id="phone"
+          placeholder="Phone"
+          className="form-control"
+          value={formData.phone}
+          onChange={handleChange}
           disabled={isSubmitting}
         />
       </div>

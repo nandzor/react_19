@@ -5,7 +5,8 @@ import { updateUser } from '@/features/users/actions';
 const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
   const [formData, setFormData] = useState({
     name: '',
-    email: ''
+    email: '',
+    phone: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -13,7 +14,8 @@ const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
     if (user) {
       setFormData({
         name: user.name || '',
-        email: user.email || ''
+        email: user.email || '',
+        phone: user.phone || ''
       });
     }
   }, [user]);
@@ -75,6 +77,18 @@ const EditUserForm = ({ user, setOptimisticUsers, clearEditing }) => {
           onChange={handleChange}
           className="form-control"
           required
+          disabled={isSubmitting}
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="edit-phone" className="form-label">Phone</label>
+        <input
+          type="tel"
+          name="phone"
+          id="edit-phone"
+          value={formData.phone}
+          onChange={handleChange}
+          className="form-control"
           disabled={isSubmitting}
         />
       </div>
